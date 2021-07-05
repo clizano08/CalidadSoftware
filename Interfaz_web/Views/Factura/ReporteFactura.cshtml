@@ -1,0 +1,177 @@
+﻿@model Datos.Models.EncFactura
+@{
+    ViewBag.Title = "ReporteFactura";
+}
+
+
+<h2>Factura</h2>
+
+<div>
+    <h4>Encabezado Factura</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+
+        <dt>
+            @Html.DisplayName("No Factura")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Vendedor")
+        </dt>
+
+        <dd>
+            @Html.DisplayName(@Model.Usuario.Nombre + " " + @Model.Usuario.Apellido)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreCliente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreCliente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subtotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subtotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descuento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descuento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoPago)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoPago)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+    </dl>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Codigo")
+        </th>
+        <th>
+            @Html.DisplayName("Producto")
+        </th>
+        <th>
+            @Html.DisplayName("Cantidad")
+        </th>
+        <th>
+            @Html.DisplayName("Precio")
+        </th>
+        <th>
+            @Html.DisplayName("Impuesto")
+        </th>
+        <th>
+            @Html.DisplayName("Total")
+        </th>
+    </tr>
+
+
+    @foreach (var item in Model.DetFactura)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @(item.Impuesto)
+            </td>
+            <td>
+                @(item.Total)
+            </td>
+        </tr>
+    }
+    @*Esta última fila muestra el detalle  del total a pagar
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+                @{
+                    decimal granTotal = 0;
+                    // Se recorre el detalle y se muestra el monto total
+                    foreach (var item in Model.DetFactura)
+                    {
+                        granTotal += (item.Precio * item.Cantidad) + item.Impuesto;
+                    }
+                    // Esto lo muestra
+                    @(granTotal)
+                }
+
+            </td>
+        </tr>
+    *@
+</table>
+
+
+<p>
+
+    @Html.ActionLink("Nueva Venta", "Index", "Factura")
+</p>
+
+
+<script>
+    
+</script>

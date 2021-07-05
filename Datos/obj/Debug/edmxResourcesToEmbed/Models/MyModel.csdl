@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_posModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DetFactura">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Secuencia" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Producto_id" Type="Int32" Nullable="false" />
+    <Property Name="EncFactura_id" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Impuesto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="EncFactura" Relationship="Self.FK_DetFactura_EncFactura" FromRole="DetFactura" ToRole="EncFactura" />
+    <NavigationProperty Name="Producto" Relationship="Self.FK_DetFactura_Producto" FromRole="DetFactura" ToRole="Producto" />
+    <Property Name="Secuencia" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EncFactura">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Usuario_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NombreCliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Subtotal" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Descuento" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Total" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="TipoPago" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="DetFactura" Relationship="Self.FK_DetFactura_EncFactura" FromRole="EncFactura" ToRole="DetFactura" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_EncFactura_Usuario" FromRole="EncFactura" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Impuesto">
+    <Key>
+      <PropertyRef Name="Porcentaje" />
+    </Key>
+    <Property Name="Porcentaje" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="DetFactura" Relationship="Self.FK_DetFactura_Producto" FromRole="Producto" ToRole="DetFactura" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Clave" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="EncFactura" Relationship="Self.FK_EncFactura_Usuario" FromRole="Usuario" ToRole="EncFactura" />
+  </EntityType>
+  <Association Name="FK_DetFactura_EncFactura">
+    <End Role="EncFactura" Type="Self.EncFactura" Multiplicity="1" />
+    <End Role="DetFactura" Type="Self.DetFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EncFactura">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetFactura">
+        <PropertyRef Name="EncFactura_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetFactura_Producto">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+    <End Role="DetFactura" Type="Self.DetFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetFactura">
+        <PropertyRef Name="Producto_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EncFactura_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="EncFactura" Type="Self.EncFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EncFactura">
+        <PropertyRef Name="Usuario_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_posEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DetFactura" EntityType="Self.DetFactura" />
+    <EntitySet Name="EncFactura" EntityType="Self.EncFactura" />
+    <EntitySet Name="Impuesto" EntityType="Self.Impuesto" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK_DetFactura_EncFactura" Association="Self.FK_DetFactura_EncFactura">
+      <End Role="EncFactura" EntitySet="EncFactura" />
+      <End Role="DetFactura" EntitySet="DetFactura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetFactura_Producto" Association="Self.FK_DetFactura_Producto">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="DetFactura" EntitySet="DetFactura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EncFactura_Usuario" Association="Self.FK_EncFactura_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="EncFactura" EntitySet="EncFactura" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

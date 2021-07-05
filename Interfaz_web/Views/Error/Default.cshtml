@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Default";
+}
+
+<h2>Error</h2>
+
+@if (TempData["Message"] != null)
+{
+    String mensaje = "<div class=\"alert  alert-danger\" role=\"alert\">" + TempData["Message"] + " </div>";
+    @Html.Raw(mensaje);
+}
+<br>
+<input type="button" value="Back" class="btn btn-default" onclick="goBack()" />
+
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

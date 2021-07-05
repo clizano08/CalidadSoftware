@@ -1,0 +1,70 @@
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\bin\Debug\Datos.dll.config
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\bin\Debug\Datos.dll
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\bin\Debug\Datos.pdb
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\bin\Debug\EntityFramework.dll
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\bin\Debug\log4net.dll
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\bin\Debug\EntityFramework.xml
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\bin\Debug\log4net.xml
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\obj\Debug\Datos.csprojAssemblyReference.cache
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\obj\Debug\Datos.csproj.CoreCompileInputs.cache
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\obj\Debug\Datos.csproj.CopyComplete
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\obj\Debug\Datos.dll
+C:\Users\EQUIPO\Desktop\VentaSnacks\Datos\obj\Debug\Datos.pdb
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\bin\Debug\Datos.dll.config
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\bin\Debug\Datos.dll
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\bin\Debug\Datos.pdb
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\bin\Debug\EntityFramework.dll
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\bin\Debug\log4net.dll
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\bin\Debug\EntityFramework.xml
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\bin\Debug\log4net.xml
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\obj\Debug\Datos.csprojAssemblyReference.cache
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\obj\Debug\Datos.csproj.CoreCompileInputs.cache
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\obj\Debug\Datos.csproj.CopyComplete
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\obj\Debug\Datos.dll
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Datos\obj\Debug\Datos.pdb
+C:\pp\Datos\bin\Debug\Datos.dll.config
+C:\pp\Datos\bin\Debug\Datos.dll
+C:\pp\Datos\bin\Debug\Datos.pdb
+C:\pp\Datos\bin\Debug\EntityFramework.dll
+C:\pp\Datos\bin\Debug\EntityFramework.SqlServer.dll
+C:\pp\Datos\bin\Debug\log4net.dll
+C:\pp\Datos\bin\Debug\EntityFramework.xml
+C:\pp\Datos\bin\Debug\EntityFramework.SqlServer.xml
+C:\pp\Datos\bin\Debug\log4net.xml
+C:\pp\Datos\obj\Debug\Datos.csprojAssemblyReference.cache
+C:\pp\Datos\obj\Debug\Datos.csproj.CoreCompileInputs.cache
+C:\pp\Datos\obj\Debug\Datos.csproj.CopyComplete
+C:\pp\Datos\obj\Debug\Datos.dll
+C:\pp\Datos\obj\Debug\Datos.pdb
+C:\PRESENTA\V15\Datos\bin\Debug\Datos.dll.config
+C:\PRESENTA\V15\Datos\bin\Debug\Datos.dll
+C:\PRESENTA\V15\Datos\bin\Debug\Datos.pdb
+C:\PRESENTA\V15\Datos\bin\Debug\EntityFramework.dll
+C:\PRESENTA\V15\Datos\bin\Debug\EntityFramework.SqlServer.dll
+C:\PRESENTA\V15\Datos\bin\Debug\log4net.dll
+C:\PRESENTA\V15\Datos\bin\Debug\EntityFramework.xml
+C:\PRESENTA\V15\Datos\bin\Debug\EntityFramework.SqlServer.xml
+C:\PRESENTA\V15\Datos\bin\Debug\log4net.xml
+C:\PRESENTA\V15\Datos\obj\Debug\Datos.csproj.CoreCompileInputs.cache
+C:\PRESENTA\V15\Datos\obj\Debug\Datos.csproj.CopyComplete
+C:\PRESENTA\V15\Datos\obj\Debug\Datos.dll
+C:\PRESENTA\V15\Datos\obj\Debug\Datos.pdb
+C:\PRESENTA\V15\Datos\obj\Debug\Datos.csprojAssemblyReference.cache
+C:\PRESENTA\V16\Datos\bin\Debug\Datos.dll.config
+C:\PRESENTA\V16\Datos\bin\Debug\Datos.dll
+C:\PRESENTA\V16\Datos\bin\Debug\Datos.pdb
+C:\PRESENTA\V16\Datos\bin\Debug\EntityFramework.dll
+C:\PRESENTA\V16\Datos\bin\Debug\EntityFramework.SqlServer.dll
+C:\PRESENTA\V16\Datos\bin\Debug\log4net.dll
+C:\PRESENTA\V16\Datos\bin\Debug\EntityFramework.xml
+C:\PRESENTA\V16\Datos\bin\Debug\EntityFramework.SqlServer.xml
+C:\PRESENTA\V16\Datos\bin\Debug\log4net.xml
+C:\PRESENTA\V16\Datos\obj\Debug\Datos.csprojAssemblyReference.cache
+C:\PRESENTA\V16\Datos\obj\Debug\Datos.csproj.CoreCompileInputs.cache
+C:\PRESENTA\V16\Datos\obj\Debug\Datos.csproj.CopyComplete
+C:\PRESENTA\V16\Datos\obj\Debug\Datos.dll
+C:\PRESENTA\V16\Datos\obj\Debug\Datos.pdb

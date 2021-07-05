@@ -1,0 +1,70 @@
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\bin\Debug\Reglas_de_negocio.dll
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\bin\Debug\Reglas_de_negocio.pdb
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\bin\Debug\Datos.dll
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\bin\Debug\log4net.dll
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\bin\Debug\EntityFramework.dll
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\bin\Debug\Datos.pdb
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\bin\Debug\Datos.dll.config
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\bin\Debug\log4net.xml
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\bin\Debug\EntityFramework.xml
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csprojAssemblyReference.cache
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csproj.CoreCompileInputs.cache
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csproj.CopyComplete
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.dll
+C:\Users\EQUIPO\Desktop\VentaSnacks\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.pdb
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\bin\Debug\Reglas_de_negocio.dll
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\bin\Debug\Reglas_de_negocio.pdb
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\bin\Debug\Datos.dll
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\bin\Debug\log4net.dll
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\bin\Debug\EntityFramework.dll
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\bin\Debug\Datos.pdb
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\bin\Debug\Datos.dll.config
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\bin\Debug\log4net.xml
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\bin\Debug\EntityFramework.xml
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csprojAssemblyReference.cache
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csproj.CoreCompileInputs.cache
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csproj.CopyComplete
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.dll
+C:\Users\carlo\Documents\Universidad\2021\II Cuatrimestre\Calidad de software\Semana 1\Tarea 1\app\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.pdb
+C:\pp\Reglas_de_negocio\bin\Debug\Reglas_de_negocio.dll
+C:\pp\Reglas_de_negocio\bin\Debug\Reglas_de_negocio.pdb
+C:\pp\Reglas_de_negocio\bin\Debug\Datos.dll
+C:\pp\Reglas_de_negocio\bin\Debug\log4net.dll
+C:\pp\Reglas_de_negocio\bin\Debug\EntityFramework.dll
+C:\pp\Reglas_de_negocio\bin\Debug\Datos.pdb
+C:\pp\Reglas_de_negocio\bin\Debug\Datos.dll.config
+C:\pp\Reglas_de_negocio\bin\Debug\log4net.xml
+C:\pp\Reglas_de_negocio\bin\Debug\EntityFramework.xml
+C:\pp\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csprojAssemblyReference.cache
+C:\pp\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csproj.CoreCompileInputs.cache
+C:\pp\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csproj.CopyComplete
+C:\pp\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.dll
+C:\pp\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.pdb
+C:\PRESENTA\V15\Reglas_de_negocio\bin\Debug\Reglas_de_negocio.dll
+C:\PRESENTA\V15\Reglas_de_negocio\bin\Debug\Reglas_de_negocio.pdb
+C:\PRESENTA\V15\Reglas_de_negocio\bin\Debug\Datos.dll
+C:\PRESENTA\V15\Reglas_de_negocio\bin\Debug\log4net.dll
+C:\PRESENTA\V15\Reglas_de_negocio\bin\Debug\EntityFramework.dll
+C:\PRESENTA\V15\Reglas_de_negocio\bin\Debug\Datos.pdb
+C:\PRESENTA\V15\Reglas_de_negocio\bin\Debug\Datos.dll.config
+C:\PRESENTA\V15\Reglas_de_negocio\bin\Debug\log4net.xml
+C:\PRESENTA\V15\Reglas_de_negocio\bin\Debug\EntityFramework.xml
+C:\PRESENTA\V15\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csprojAssemblyReference.cache
+C:\PRESENTA\V15\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csproj.CoreCompileInputs.cache
+C:\PRESENTA\V15\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csproj.CopyComplete
+C:\PRESENTA\V15\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.dll
+C:\PRESENTA\V15\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.pdb
+C:\PRESENTA\V16\Reglas_de_negocio\bin\Debug\Reglas_de_negocio.dll
+C:\PRESENTA\V16\Reglas_de_negocio\bin\Debug\Reglas_de_negocio.pdb
+C:\PRESENTA\V16\Reglas_de_negocio\bin\Debug\Datos.dll
+C:\PRESENTA\V16\Reglas_de_negocio\bin\Debug\log4net.dll
+C:\PRESENTA\V16\Reglas_de_negocio\bin\Debug\EntityFramework.dll
+C:\PRESENTA\V16\Reglas_de_negocio\bin\Debug\Datos.pdb
+C:\PRESENTA\V16\Reglas_de_negocio\bin\Debug\Datos.dll.config
+C:\PRESENTA\V16\Reglas_de_negocio\bin\Debug\log4net.xml
+C:\PRESENTA\V16\Reglas_de_negocio\bin\Debug\EntityFramework.xml
+C:\PRESENTA\V16\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csprojAssemblyReference.cache
+C:\PRESENTA\V16\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csproj.CoreCompileInputs.cache
+C:\PRESENTA\V16\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.csproj.CopyComplete
+C:\PRESENTA\V16\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.dll
+C:\PRESENTA\V16\Reglas_de_negocio\obj\Debug\Reglas_de_negocio.pdb

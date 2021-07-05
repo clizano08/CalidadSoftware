@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_posModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DetFactura">
+    <Key>
+      <PropertyRef Name="Id" />
+      <PropertyRef Name="Secuencia" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Secuencia" Type="int" Nullable="false" />
+    <Property Name="Producto_id" Type="int" Nullable="false" />
+    <Property Name="EncFactura_id" Type="numeric" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="Precio" Type="money" Nullable="false" />
+    <Property Name="Impuesto" Type="money" Nullable="false" />
+    <Property Name="Total" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EncFactura">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Usuario_id" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="NombreCliente" Type="varchar" MaxLength="50" />
+    <Property Name="Fecha" Type="date" Nullable="false" />
+    <Property Name="Subtotal" Type="money" Nullable="false" />
+    <Property Name="Descuento" Type="money" Nullable="false" />
+    <Property Name="Total" Type="money" Nullable="false" />
+    <Property Name="TipoPago" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Impuesto">
+    <Key>
+      <PropertyRef Name="Porcentaje" />
+    </Key>
+    <Property Name="Porcentaje" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+    <Property Name="Precio" Type="money" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" />
+    <Property Name="Direccion" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono" Type="varchar" MaxLength="50" />
+    <Property Name="Clave" Type="varchar(max)" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_DetFactura_EncFactura">
+    <End Role="EncFactura" Type="Self.EncFactura" Multiplicity="1" />
+    <End Role="DetFactura" Type="Self.DetFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EncFactura">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetFactura">
+        <PropertyRef Name="EncFactura_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetFactura_Producto">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
+    <End Role="DetFactura" Type="Self.DetFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetFactura">
+        <PropertyRef Name="Producto_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EncFactura_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="EncFactura" Type="Self.EncFactura" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EncFactura">
+        <PropertyRef Name="Usuario_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_posModelStoreContainer">
+    <EntitySet Name="DetFactura" EntityType="Self.DetFactura" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EncFactura" EntityType="Self.EncFactura" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Impuesto" EntityType="Self.Impuesto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DetFactura_EncFactura" Association="Self.FK_DetFactura_EncFactura">
+      <End Role="EncFactura" EntitySet="EncFactura" />
+      <End Role="DetFactura" EntitySet="DetFactura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetFactura_Producto" Association="Self.FK_DetFactura_Producto">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="DetFactura" EntitySet="DetFactura" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EncFactura_Usuario" Association="Self.FK_EncFactura_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="EncFactura" EntitySet="EncFactura" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

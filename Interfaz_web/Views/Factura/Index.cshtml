@@ -1,0 +1,1048 @@
+﻿@model Datos.Models.EncFactura
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+
+    .modal-body { /*Para que se ajuste el cuerpo del modal*/
+        overflow-x: auto !important;
+    }
+</style>
+
+
+
+
+@if (TempData["Message"] != null)
+{
+    String mensaje = "";
+
+    mensaje = @"<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+<span aria-hidden='true'>&times;</span> </button>
+<strong>Error!</strong> " + TempData["Message"] + " </div>";
+
+@Html.Raw(mensaje);
+}
+
+@using (Html.BeginForm("Save", "Factura", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    <div class="form-horizontal">
+
+
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NombreCliente, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.NombreCliente, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Fecha, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => model.Fecha, htmlAttributes: new { @class = "form-control", @Value = DateTime.Now.ToString("yyyy-MM-dd"), @readonly = "readonly" })
+                        @Html.ValidationMessageFor(model => model.Fecha, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        @*Solo para obtenet total*@
+        <div style="display:none">
+            @Html.EditorFor(model => model.Subtotal, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+
+
+
+    </div>
+
+    @* otra forma de invocarlo
+        <input type="button" value="Detail" onclick="location.href='@Url.Action("AddProducto", "Factura")?codigoproducto=' + $('#CodigoProducto').val()" />
+    *@
+
+    <hr />
+
+    <br>
+    <div class="row">
+        <div class="  col-sm-3">
+            @Html.Label("Codigo", htmlAttributes: new { @class = "control-label" })
+            @Html.TextBox("txtCodigoProducto", "", new { @class = "form-control" })
+            @Html.Label("txtDescripcionProducto", "-", htmlAttributes: new { @class = "control-label" })
+        </div>
+
+        <div class=" col-sm-2">
+            @Html.Label("Cantidad", htmlAttributes: new { @class = "control-label" })
+            @Html.TextBox("txtCantidadProducto", "1", new { @class = "form-control", @type = "number", @min = "1" })
+        </div>
+        <div class="col-sm-2">
+            @Html.Label("Precio", htmlAttributes: new { @class = "control-label" })
+            @Html.TextBox("txtPrecioProducto", "", new { @class = "form-control", @readonly = "readonly" })
+        </div>
+        <div class=" col-sm-3">
+            <br />
+            <button type="button" class="btn btn-primary btn-md" id="btnAgregarProducto">
+                <span class="glyphicon  glyphicon-plus"></span>
+                Agregar
+            </button>
+
+        </div>
+    </div>
+
+    <hr />
+    <div class="panel panel-default">
+        <div class="panel-heading">Ventas</div>
+        <div class="form-group">
+            <br>
+            <table id="TablaCompras" class="table">
+                <thead>
+                    <tr>
+                        <th align="left">Codigo</th>
+
+                        <th align="left">Descripcion</th>
+                        <th align="left">Cantidad</th>
+                        <th align="left">Precio Unidad</th>
+                        <th align="left">SubTotal</th>
+                        <th align="left">Impuesto</th>
+                        <th align="left">Total</th>
+                        <th align="left">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    @* Contenedor de mensaje*@
+    <div class="form-group">
+        <div id="mensaje" />
+    </div>
+
+    <!-- Botones inferiores-->
+    <hr>
+
+    <!-- Botones Limpiar-->
+    <button type="button" class="btn btn-primary btn-md" id="btnNuevaOrden">
+        <span class="glyphicon  glyphicon-shopping-cart"></span>
+        Nuevo
+    </button>
+
+    <!-- Submit
+        <button type="submit" class="btn btn-success btn-md" id="btnSalvar">
+        <span class="glyphicon  glyphicon-floppy-save"></span>
+        Salvar
+    </button>
+
+        -->
+
+
+
+    <a onclick="modalDetail()" href="#" class="btn btn-success btn-md" id="btnPagar"><span class="glyphicon glyphicon-credit-card"></span> Pagar</a>
+    <hr>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+
+
+
+
+
+    <!-- Modal TIPO DE PAGO-->
+    <!--Las ventanas modas estan ocultas en el código son activadas por Javascript/JQuery-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+
+                    <h4 class="modal-title" id="myModalLabel">Tipo de Pago</h4>
+                    <hr />
+                    <ul style="list-style:none">
+                        <li><label id="labelmostrarsubtotal" class="text-muted"></label></li>
+                        <li><label id="labelmostrardescuento" class="text-muted"></label></li>
+                        <li><label id="labelmostrarpromocion" class="text-muted"></label></li>
+                        <li><label id="labeltotalpagar" class="text-muted"></label></li>
+                    </ul>
+
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="col-md-12">
+
+                        <div class="row form-group" style="margin-top: 30px">
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    @Html.Label("Tipo de Pago", htmlAttributes: new { @class = "control-label col-md-3" })
+                                    <div class="col-md-4">
+                                        @Html.DropDownListFor(x => Model.TipoPago, new SelectList(ViewBag.TipoPago), htmlAttributes: new { @class = "form-control" })
+                                    </div>
+
+                                    <div id="formularioTarjeta" style="display:none" class="col-md-5">
+                                        <div class="form-group">
+                                            @Html.TextBox("numeroTarjeta", "", new { @class = "form-control", placeholder = "Número de tarjeta", @pattern = "[0-9]+", @minlength = "16", @maxlength = "16" })
+                                            @Html.ValidationMessage("numeroTarjeta", "", new { @class = "text-danger" })
+                                            <label id="labelvalidatarjeta" autocomplete="off"></label>
+                                        </div>
+                                    </div>
+                                    <div id="formularioEfectivo" style="display:none" class="col-md-5">
+                                        <div class="form-group">
+                                            @Html.TextBox("efectivo", "", new { @class = "form-control", placeholder = "Cantidad en efectivo", autocomplete = "off" })
+                                            <label id="labelefectivo">Su vuelto: ₡</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row form-group" id="divDescuento">
+                            <div class="col-md-9">
+                                <label class="control-label  col-md-3">Descuento</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">%</span>
+                                    @Html.DropDownListFor(x => Model.Descuento, new SelectList(ViewBag.Descuento), htmlAttributes: new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success btn-md" id="btnSalvar">
+                        <span class="glyphicon  glyphicon-floppy-save"></span>
+                        Salvar
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+}
+
+@section Scripts {
+    @* Validaciones en Javascript, si la siguiente línea NO va, las validaciones no se ejecutan en el cliente *@
+    @Scripts.Render("~/bundles/jqueryval")
+    @*Se utilizan para el Autocomplete*@
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqueryui")
+
+
+
+
+
+    <script>
+
+        $("document").ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/Factura/CargarTabla",
+                dataType: "json",
+                success: function (data) {
+
+                    // Valida si fue devuelto un objeto en Json que tiene un property Mensaje
+                    if (data.hasOwnProperty('Mensaje') != "") {
+                        // Muestra un mensaje temporal
+                        var mensaje = "<div class='alert alert-danger alert-dismissible' role='alert'>";
+                        mensaje += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
+                        mensaje += "<span aria-hidden='true'>&times;</span></button>";
+                        mensaje += "<strong>Error!</strong> " + data.Mensaje + " </div>";
+                        $("#mensaje").html(mensaje).show("slow").delay(1500).hide("slow");
+
+                        return;
+                    }
+
+
+                    // Con esta linea se puede hacer debug con Edge pero hay que habilitarla en el Visual Studio
+                    //debugger;
+
+
+                    // Elimina todos los rows
+                    $("#TablaCompras > tbody:last").children().remove();
+
+                    var granTotal = 0;
+
+                    // Lee toda Data que viene en formato JSON y se recorre y se crea un table on-Fly
+                    $.each(data, function (i, item) {
+
+
+                        // No hay que convertir a base64 el serializador Newtonsoft.Json lo envía listo para utilizar
+
+                        var subTotal = item.Cantidad * item.Precio;
+                        var total = (item.Cantidad * item.Precio) + item.Impuesto;
+
+
+
+                        // forma las filas de la tabla
+                        var rows =
+                            "<tr id=secuencia" + item.Secuencia + ">"
+                            + "<td >" + item.IdProducto + "</td>"
+                            + "<td >" + item.DescripcionProducto + "</td>"
+                            + "<td >" + item.Cantidad + "</td>"
+                            + "<td >" + item.Precio + "</td>"
+                            + "<td >" + subTotal + "</td>"
+                            + "<td >" + item.Impuesto + "</td>"
+                            + "<td >" + total + "</td>"
+                            + "<td >" + "<a onclick='deleteItem(" + item.Secuencia + ")' href='#' class = 'btn  btn-danger btn-md'>Borrar</a>" + "</td>"
+                            + "</tr>";
+                        $('#TablaCompras tbody').append(rows);
+                        //debugger;
+                        granTotal = granTotal + (parseInt(item.Cantidad) * parseFloat(item.Precio)) + parseFloat(item.Impuesto);
+                        //console.log("Gran total" + granTotal);
+
+                        $("#Subtotal").val(granTotal);
+                        $("#labeltotalpagar").html("Total a pagar: ₡" + round5(granTotal));
+                    });
+
+
+
+
+                    var detalle = "<tr>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td id='granTotal'>" + granTotal + "</td>"
+                        + "<td></td>"
+                        + "</tr>";
+                    $('#TablaCompras tbody').append(detalle);
+
+
+                    // limpiar campos y colocar foco
+                    $("#txtCodigoProducto").val("");
+                    console.log($("label[for*='txtDescripcionProducto']").html());
+                    $("label[for*='txtDescripcionProducto']").html("-");
+                    $("#txtPrecioProducto").val("");
+                    $("#txtCantidadProducto").val("1");
+                    $("#txtCodigoProducto").focus("");
+
+
+
+                },
+                statusCode: {
+                    404: function (content) { alert('cannot find resource'); },
+                    500: function (content) { alert('internal server error'); }
+                },
+                error: function (xhr, status, error) {
+                    // Muestra error
+                    alert("Error: " + error + ", No Error: " + xhr.status);
+                }
+            });
+        });
+    </script>
+
+    <script>
+
+        var totalConDescuento = 0;
+        var totalConPromocion = 0;
+        var hayDescuento = false;
+        var hayPromo = false;
+
+        //$("#btnPagar").click(function () { mostrarSubtotal() });
+
+
+        $("#Descuento").change(function () { calcularDescuento() });
+
+
+        $("#btnPagar").click(function () { calcularPromocion() });
+
+
+        function mostrarSubtotal() {
+            //debugger;
+            var granTotal = document.getElementById("granTotal");
+            document.getElementById('labelmostrarsubtotal').innerHTML = "Subtotal: ¢" + round5(granTotal.innerText);
+        }
+
+
+        //Para redondear a 5 o 0
+        function round5(x) {
+            //debugger;
+            return (x % 5) >= 2.5 ? parseInt(x / 5) * 5 + 5 : parseInt(x / 5) * 5;
+        }
+
+        function calcularDescuento() {
+            //debugger;
+            var desc = $("#Descuento").val();
+            document.getElementById('efectivo').value = "";
+            document.getElementById('btnSalvar').disabled = true;
+            //debugger;
+            $.ajax({
+                type: "GET",
+                url: "/Factura/CalcularDescuento/",
+                data: { descuento: desc },
+                contentType: "decimal",
+                success: function (data) {
+                    //debugger;
+                  //  document.getElementById('labelmostrarsubtotal').innerHTML = "";
+                  //  document.getElementById('labelmostrardescuento').innerHTML = "";
+                  //  document.getElementById('labelmostrarpromocion').innerHTML = "";
+                  //  document.getElementById('labeltotalpagar').innerHTML = "";
+                    
+                  
+                   
+
+                    if (data == 0) {
+                        document.getElementById('labelmostrardescuento').innerHTML = "No se aplica descuento*";
+                        document.getElementById('divDescuento').style.display = "none";
+
+
+                    } else {
+                        var granTotal = document.getElementById("granTotal");
+                        var calculo = parseFloat(granTotal.innerText) - parseFloat(data) - totalConPromocion;
+                        document.getElementById('labelmostrardescuento').innerHTML = "Su descuento es de: ¢" + round5(data);
+                        document.getElementById('labeltotalpagar').innerHTML = "Total a pagar: ₡" + round5(calculo);
+                        document.getElementById('divDescuento').style.display = "block";
+                        hayDescuento = true;
+                    }
+
+
+                    if (hayPromo) {
+                        var granTotal = document.getElementById("granTotal");
+                        var calculo = parseFloat(granTotal.innerText) - parseFloat(data) - totalConPromocion;
+                        totalConDescuento = calculo;
+                        document.getElementById('labeltotalpagar').innerHTML = "Total a pagar: ₡" + round5(calculo);
+                    }
+                    else {
+                        totalConDescuento = calculo;
+                    }
+                   
+                   
+
+                },
+                // Capturar errores y mostrar un mensaje de error
+                error: function (xhr, status, error) {
+                    alert(status + " " + error + " " + xhr.status + " " + xhr.statusText);
+                }
+            });
+           
+        }
+
+
+
+
+        function calcularPromocion() {
+
+            var granTotal = document.getElementById("granTotal");
+
+            if (granTotal <= 0) {
+                alert("Debes ingresar al menos un producto");
+                $("#myModal").modal('hide');
+            }
+
+            mostrarSubtotal();
+            $.ajax({
+                type: "GET",
+                url: "/Factura/CalcularPromocion/",
+                contentType: "decimal",
+                success: function (response) {
+                    //debugger;
+
+
+
+                    if (response > 0) {
+                        document.getElementById('labelmostrarpromocion').innerHTML = "Promo 2x1 Gelatinas, rebajo de ₡" + response;
+                        totalConPromocion = response;
+                        hayPromo = true;
+                    } else {
+                        document.getElementById('labelmostrarpromocion').innerHTML = "No se aplica promoción*";
+                    }
+
+                    calcularDescuento();
+
+                },
+                error: function (xhr, status, error) {
+                    alert(status + " " + error + " " + xhr.status + " " + xhr.statusText);
+                }
+            });
+
+        }
+
+
+
+
+        efectivo.addEventListener('keyup', function () {
+
+            var efectivo = document.getElementById("efectivo").value;
+            var etiquetamonto = document.getElementById("labelefectivo");
+            var granTotal = document.getElementById("granTotal");
+            //debugger;
+
+
+            if (!hayDescuento)
+                var calculo = parseFloat(efectivo) - round5(parseFloat(granTotal.innerText));
+            else
+                var calculo = parseFloat(efectivo) - round5(parseFloat(totalConDescuento));
+
+            if (hayPromo)
+                var calculo = parseFloat(efectivo) - round5(parseFloat(totalConDescuento));
+
+            if (isNaN(calculo)) {
+                etiquetamonto.innerHTML = "Debe ingresar un monto numérico";
+                return;
+            }
+
+            if (calculo < 0) {
+                etiquetamonto.innerHTML = "El monto ingresado debe ser mayor al valor de los productos";
+                document.getElementById('btnSalvar').disabled = true;
+            } else {
+                etiquetamonto.innerHTML = "Su vuelto: ₡" + String(calculo);
+                document.getElementById('btnSalvar').disabled = false;
+            }
+
+
+
+        });
+
+
+
+
+        numeroTarjeta.addEventListener('keyup', function () {
+            var num = $("#numeroTarjeta").val().trim();
+            $.ajax({
+                type: "GET",
+                url: "/Factura/VerificarTarjeta/",
+                data: { numtTarjeta : num },
+                success: function (data) {
+                    //debugger;
+                    
+                    
+                    
+
+                    if (num.length ==0) {
+                        document.getElementById('labelvalidatarjeta').innerHTML = "Ingrese los 16 dígitos de la tarjeta";
+                        document.getElementById('btnSalvar').disabled = true;
+                        return;
+                    }
+                    if (num.length <= 15) {
+                        document.getElementById('labelvalidatarjeta').innerHTML = "Ingrese los 16 dígitos";
+                        document.getElementById('btnSalvar').disabled = false;
+                        return;
+                    }
+                    if (data == "True") {
+                        document.getElementById('labelvalidatarjeta').innerHTML = "Tarjeta ingresada con éxito!";
+                        document.getElementById('btnSalvar').disabled = false;
+                    } else {
+                        document.getElementById('labelvalidatarjeta').innerHTML = "Número de tarjeta inválido";
+                        document.getElementById('btnSalvar').disabled = true;
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    alert(status + " " + error + " " + xhr.status + " " + xhr.statusText);
+                }
+            });
+            
+
+        });
+
+
+
+    </script>
+
+
+
+
+
+
+    <script>
+        //mostrar formulario tarjeta al dar clic
+
+        function mostrarTarjeta() {
+            $("#formularioTarjeta").show("slow").delay(1000);
+            ocultarBotonTarjeta();
+            ocultarBotonEfectivo();
+
+        }
+        function ocultarTarjeta() {
+            $("#formularioTarjeta").hide("slow").delay(1000);
+            mostrarBotonTarjeta();
+
+        }
+        function mostrarBotonTarjeta() {
+            $("#botonTarjeta").show("slow").delay(1000);
+
+        }
+        function ocultarBotonTarjeta() {
+            $("#botonTarjeta").hide("slow").delay(1000);
+
+        }
+
+
+
+        //mostrar formulario efectivo al dar clic
+
+        function mostrarEfectivo() {
+            $("#formularioEfectivo").show("slow").delay(1000);
+            ocultarBotonTarjeta();
+            ocultarBotonEfectivo();
+
+        }
+        function ocultarEfectivo() {
+            $("#formularioEfectivo").hide("slow").delay(1000);
+            mostrarBotonEfectivo();
+
+        }
+        function mostrarBotonEfectivo() {
+            $("#botonEfectivo").show("slow").delay(1000);
+
+        }
+        function ocultarBotonEfectivo() {
+            $("#botonEfectivo").hide("slow").delay(1000);
+
+        }
+
+
+        //boton cancelar
+        function mostrarDropDown() {
+            $("#TipoPago").show("slow").delay(1000);
+            
+
+        }
+
+
+
+
+
+        $("#TipoPago").click(function () {
+            if ($("#TipoPago").val() == 'Efectivo') {
+                mostrarEfectivo();
+                ocultarTarjeta();
+            }
+            if ($("#TipoPago").val() == 'Tarjeta') {
+                mostrarTarjeta();
+                ocultarEfectivo();
+            }
+
+
+            if ($("#TipoPago").val() == 'Seleccionar') {
+                ocultarTarjeta();
+                ocultarEfectivo();
+            }
+        });
+
+
+
+
+
+    </script>
+
+
+
+
+    <script>
+        function modalDetail() {
+            //debugger;
+            var granTotal = document.getElementById("granTotal").innerHTML;
+            if ( granTotal == 0) {
+                alert("Debe seleccionar un producto primero!");
+                return;
+            }
+            $("#myModal").modal('show');
+            document.getElementById('btnSalvar').disabled = true;
+        }
+
+
+    </script>
+
+
+
+    <script>
+
+
+        // Este evento se ejecuta antes después de invocar  $("#myModal").modal();
+        // acá es donde se invoca por Ajax al Controller y este devuelve Partial View
+        $('#myModal').on('shown.bs.modal', function () {
+            // permite mover
+            // document.getElementById("#TipoPago").selectedIndex = 0;
+            $('#TipoPago').val("Seleccionar");
+            $("#formularioEfectivo").hide("slow").delay(1000);
+            $("#formularioTarjeta").hide("slow").delay(1000);
+            $('#Descuento').val("1");
+            $('.modal-dialog').draggable();
+         
+
+
+        })
+
+        // Se ejecuta cuando se destruye el modal
+        $("#myModal").on('hide.bs.modal', function () {
+            // Se limpia el Div para no dejar
+         //  $(".modal-body").html("...");
+        });
+
+    </script>
+
+
+
+
+
+    <script>
+        // ///////////////////////////////////////////////////////
+        // Nueva Orden de compra limpie el carrito de compras y //
+        // reestablesca la UI todo!!!                           //
+        //////////////////////////////////////////////////////////
+        $("#btnNuevaOrden").click(function () {
+
+            // Limpiar el Carrito de Compras de la Sessión
+            $.ajax({
+                type: "GET",
+                url: "/Factura/ClearShoppingCar",
+                // dataType: "json",
+                success: function (data) {
+
+                },
+                statusCode: {
+                    404: function (content) { alert('cannot find resource'); },
+                    500: function (content) { alert('internal server error'); }
+                },
+                error: function (xhr, status, error) {
+                    alert("Error: " + error + ", No Error: " + xhr.status);
+                }
+            });
+
+            // Limpiar UI
+           //$(".modal-body").html("...");
+            document.getElementById('labelmostrarsubtotal').innerHTML = "";
+            document.getElementById('labelmostrardescuento').innerHTML = "";
+            document.getElementById('labelmostrarpromocion').innerHTML = "";
+            document.getElementById('labeltotalpagar').innerHTML = "";
+            $("#Usuario_id").val("");
+            $("label[for*='ID_usuario']").html("-");
+            $("#NombreCliente").val("");
+            // foco
+            $("#Usuario_id").focus();
+
+            // Limpia la tabla con los datos mostrados
+            $("#TablaCompras > tbody:last").children().remove();
+
+        });
+    </script>
+
+    <script>
+
+        //////////////////////////////////////////////
+        // Busca el código del producto por nombre  //
+        //////////////////////////////////////////////
+        $("#txtCodigoProducto").focus(function () {
+            // Limpia la caja de texto
+            $("#txtCodigoProducto").val("");
+            console.log($("label[for*='txtDescripcionProducto']").html());
+            $("label[for*='txtDescripcionProducto']").html("-");
+            $("#txtPrecioProducto").val("");
+            $("#txtCantidadProducto").val("1");
+        });
+
+        // var precioProducto = 0.0;
+        // Click encima del codigo del producto para buscarlo
+        $("#txtCodigoProducto").autocomplete({
+            source: function (request, response) {
+                // Limpiar la imagen
+                //$("#ImgProducto").attr("src", "/Images/nophoto.jpg");
+                // leer los datos de la descripción
+                var texto = $("#txtCodigoProducto").val();
+                // Invocar al Controller por Ajax
+                $.ajax({
+                    type: "GET",
+                    url: "/Producto/GetProductoByName",
+                    dataType: "json",
+                    data: { name: texto },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+
+                            // Label lo que muestra e item lo que coloca en la caja de texto, data para todo el objeto seleccionado.
+                            return { label: item.Nombre, value: item.Id, data: item };
+
+                        }));
+                    },
+                    error: function (xhr, status, error) {
+
+                        // debugger;
+                        alert("Error: " + error + ", No Error: " + xhr.status);
+                    },
+                });
+            },
+            select: function (event, ui) {
+
+                // Colocar el valor
+                $("#txtCodigoProducto").val(ui.item.value);
+                // Coloca el precio
+                $("#txtPrecioProducto").val(ui.item.data.Precio);
+                // Coloca datos en el Label
+                $("label[for*='txtDescripcionProducto']").html(ui.item.label);
+                // Muestra la imagen que  por venir en un NewtonSoft Json ya viene serializada en base64 NO hay que convertirla
+                //$("#ImgProducto").attr("src", "data:image/jpeg;charset=utf-8;base64," + ui.item.data.Imagen);
+                // Coloca el foto
+                $("txtCantidadProducto").focus();
+                // Se sale
+                return false;
+            }, statusCode: {
+                404: function (content) { alert('cannot find resource'); },
+                500: function (content) { alert('internal server error'); }
+            },
+            error: function (xhr, status, error) {
+                // Muestra posibles errores
+                alert("Error: " + error + ", No Error: " + xhr.status);
+            }
+        });
+    </script>
+
+
+    <script>
+        // ///////////////////////////////////
+        // Agrega un nuevo producto      .  //
+        //////////////////////////////////////
+        $("#btnAgregarProducto").click(function () {
+
+            // Lee los valores de las cajas de teto
+            var txtCodigoProducto = $("#txtCodigoProducto").val();
+            var txtCantidadProducto = $("#txtCantidadProducto").val();
+            var txtPrecioProducto = $("#txtPrecioProducto").val();
+
+
+            // Valida si es numérico
+            if ($.isNumeric(txtCodigoProducto) == false) {
+                alert("El código del producto es requerido y un número");
+                $("#txtCodigoProducto").focus();
+                return;
+            }
+
+            // Va en blanco ?
+            if (txtCodigoProducto == "") {
+                alert("El código del producto es requerido");
+                $("#txtCodigoProducto").focus();
+                return;
+            }
+            // Si es numérico
+            if ($.isNumeric(txtCantidadProducto) == false) {
+                alert("La cantidad es un dato requerido y  numérico");
+                $("#txtCantidadProducto").focus();
+                return;
+            }
+
+            // Convierte a numerico y valida si es mayor a cero
+            if (parseInt(txtCantidadProducto) <= 0) {
+                alert("La cantidad debe ser mayor o igual a 1");
+                $("#txtCantidadProducto").focus();
+                return;
+            }
+
+            // Invocar al Controller por Ajax
+            $.ajax({
+                type: "GET",
+                url: "/Factura/AddProducto",
+                dataType: "json",
+                data: {
+                    // Parametros que se envían al controller
+                    codigoproducto: txtCodigoProducto,
+                    cantidadproducto: txtCantidadProducto,
+                    precioproducto: txtPrecioProducto
+                },
+                success: function (data) {
+
+                    // Valida si fue devuelto un objeto en Json que tiene un property Mensaje
+                    if (data.hasOwnProperty('Mensaje') != "") {
+                        // Muestra un mensaje temporal
+                        var mensaje = "<div class='alert alert-danger alert-dismissible' role='alert'>";
+                        mensaje += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
+                        mensaje += "<span aria-hidden='true'>&times;</span></button>";
+                        mensaje += "<strong>Error!</strong> " + data.Mensaje + " </div>";
+                        $("#mensaje").html(mensaje).show("slow").delay(1500).hide("slow");
+
+                        return;
+                    }
+
+
+                    // Con esta linea se puede hacer debug con Edge pero hay que habilitarla en el Visual Studio
+                    //debugger;
+
+
+                    // Elimina todos los rows
+                    $("#TablaCompras > tbody:last").children().remove();
+
+                    var granTotal = 0;
+
+                    // Lee toda Data que viene en formato JSON y se recorre y se crea un table on-Fly
+                    $.each(data, function (i, item) {
+
+
+                        // No hay que convertir a base64 el serializador Newtonsoft.Json lo envía listo para utilizar
+
+                        var subTotal = item.Cantidad * item.Precio;
+                        var total = (item.Cantidad * item.Precio) + item.Impuesto;
+
+
+
+                        // forma las filas de la tabla
+                        var rows =
+                            "<tr id=secuencia" + item.Secuencia + ">"
+                            + "<td >" + item.IdProducto + "</td>"
+                            + "<td >" + item.DescripcionProducto + "</td>"
+                            + "<td >" + item.Cantidad + "</td>"
+                            + "<td >" + item.Precio + "</td>"
+                            + "<td >" + subTotal + "</td>"
+                            + "<td >" + item.Impuesto + "</td>"
+                            + "<td >" + total + "</td>"
+                            + "<td >" + "<a onclick='deleteItem(" + item.Secuencia + ")' href='#' class = 'btn  btn-danger btn-md'>Borrar</a>" + "</td>"
+                            + "</tr>";
+                        $('#TablaCompras tbody').append(rows);
+                        //debugger;
+                        granTotal = granTotal + (parseInt(item.Cantidad) * parseFloat(item.Precio)) + parseFloat(item.Impuesto);
+                        //console.log("Gran total" + granTotal);
+
+                        $("#Subtotal").val(granTotal);
+                        $("#labeltotalpagar").html("Total a pagar: ₡" + round5(granTotal));
+                    });
+
+
+
+
+                    var detalle = "<tr>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td></td>"
+                        + "<td id='granTotal'>" + granTotal + "</td>"
+                        + "<td></td>"
+                        + "</tr>";
+                    $('#TablaCompras tbody').append(detalle);
+
+
+                    // limpiar campos y colocar foco
+                    $("#txtCodigoProducto").val("");
+                    console.log($("label[for*='txtDescripcionProducto']").html());
+                    $("label[for*='txtDescripcionProducto']").html("-");
+                    $("#txtPrecioProducto").val("");
+                    $("#txtCantidadProducto").val("1");
+                    $("#txtCodigoProducto").focus("");
+
+
+
+                },
+                statusCode: {
+                    404: function (content) { alert('cannot find resource'); },
+                    500: function (content) { alert('internal server error'); }
+                },
+                error: function (xhr, status, error) {
+                    // Muestra error
+                    alert("Error: " + error + ", No Error: " + xhr.status);
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+    <script>
+        /////////////////////////////////////////////////
+        // Funcion que borra un producto en el carrito //
+        ////////////////////////////////////////////////
+        function deleteItem(id) {
+            $.ajax({
+                type: "GET",
+                url: "/Factura/DeleteItem/",
+                // parametro por JSON
+                data: { id: id },
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+
+                    $("#granTotal").html("0");
+                    $('#secuencia' + id).remove();
+
+                    /*
+                    // Se tuvo que comentar porque daba problemas de sincronía
+                    $('#secuencia' + id).fadeOut('slow', function () {
+                        // Borrarlo
+                       $('#secuencia' + id).remove();
+                    });
+                    */
+                    var granTotalActual = 0;
+                    var actual = 0;
+                    // Iterar la tabla
+                    $("#TablaCompras tr").each(function () {
+                        //debugger;
+                        var self = $(this);
+                        var any = self.find("td:eq(6)").text().trim();
+                        // es un número en la columa 6 ... ojo inicia de cero.
+                        if ($.isNumeric(any) == true) {
+                            actual = parseInt(self.find("td:eq(6)").text());
+                            granTotalActual = granTotalActual + actual;
+                            $("#labeltotalpagar").html("Total a pagar: ₡" + round5(granTotalActual));
+                        }
+
+                    });
+
+                    // Colocar el nuevo valor
+                    $("#granTotal").html(granTotalActual);
+
+                },
+                // Capturar errores y mostrar un mensaje de error
+                error: function (xhr, status, error) {
+                    var mensaje = "<div class='alert alert-danger' role='alert'> Result: " +
+                        status + " " + error + " " + xhr.status + " " + xhr.statusText + "</div>";
+                    //debugger;
+                    $("#mensaje").html(mensaje).show("slow").delay(1000).hide("slow");
+                }
+            });
+
+        }
+
+    </script>
+
+    <style>
+        /* Cuando el puntero del Mouse se coloque encima de la imagen la amplia, es un efecto para que se vea
+            bonito :)
+        */
+        <!-- Hacer + grande a imagen sobre la image -->
+        .zoom {
+        }
+
+        .zoom:hover {
+            transform: scale(2.5); /* (250% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+        }
+    </style>
+
+}
+
